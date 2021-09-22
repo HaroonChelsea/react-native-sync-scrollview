@@ -13,6 +13,8 @@ export interface ScrollSyncProps {
     scrollViewsStyle?: StyleProp<ViewStyle>;
     /** Choose Horizontal or Vertical type, default is Horizontal */
     type?: 'horizontal' | 'vertical';
+    /** Width/height of the item */
+    sti?: number;
 }
 
 /**
@@ -32,7 +34,7 @@ export interface ScrollSyncProps {
  * <ScrollSync rowItems={rowItems} containerStyle={styles.scrollSync} />
  * ```
  */
-export function ScrollSync({ rowItems, containerStyle, scrollViewsStyle, type = 'horizontal' }: ScrollSyncProps) {
+export function ScrollSync({ sti,rowItems, containerStyle, scrollViewsStyle, type = 'horizontal' }: ScrollSyncProps) {
     const [contentPosition, setContentPosition] = React.useState(-1);
     const [scrollLengths, setScrollLengths] = React.useState<Map<number, number>>(new Map());
     const itemsRef = React.useRef<Array<ScrollView | null>>([]);
@@ -83,6 +85,9 @@ export function ScrollSync({ rowItems, containerStyle, scrollViewsStyle, type = 
                     showsHorizontalScrollIndicator={false}
                     showsVerticalScrollIndicator={false}
                     style={scrollViewsStyle}
+                    pagingEnabled
+                    decelerationRate={0}
+                    snapToInterval={sti}
                     scrollEventThrottle={16}>
                     {items}
                 </ScrollView>)}
